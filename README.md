@@ -40,6 +40,6 @@ LangChain
 
 Flask
 
-GPT
+Gemini
 
 Pinecone
