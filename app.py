@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 from src.prompt import *
 import os
 
+load_dotenv(override=True)
+
 app = Flask(__name__)
 
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
@@ -32,7 +34,7 @@ docsearch = PineconeVectorStore.from_existing_index(
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
 chatModel = ChatGoogleGenerativeAI(
-    model="models/gemini-2.5-pro",
+    model="models/gemini-2.5-flash",
     api_key=GEMINI_API_KEY
     )
 
