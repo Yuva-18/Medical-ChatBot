@@ -39,11 +39,10 @@ chatModel = ChatGoogleGenerativeAI(
     )
 
 prompt = ChatPromptTemplate.from_messages(
-    {
+    [
         ("system", system_prompt),
         ("human", "{input}"),
-
-    }
+    ]
 )
 
 question_answer_chain = create_stuff_documents_chain(chatModel, prompt)
