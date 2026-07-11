@@ -3,7 +3,7 @@ flask
 sentence-transformers
 pypdf
 python-dotenv
-langchain-pinecone
+langchain-pinecone==0.2.8
 langchain-openai
 langchain-community
 langchain-google-genai
