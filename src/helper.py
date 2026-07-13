@@ -1,8 +1,9 @@
+import os
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from typing import List
 from langchain.schema import Document
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_pinecone import PineconeEmbeddings
 
 def load_pdf_files(data):
     loader = DirectoryLoader(
@@ -38,10 +39,13 @@ def text_split(minimal_docs):
     texts_chunks = text_splitter.split_documents(minimal_docs)
     return texts_chunks
 
-def download_embedding():
-    """Download and return the HuggingFace embedding model"""
-    model_name = "sentence-transformers/all-MiniLM-L6-v2"
-    embeddings = HuggingFaceEmbeddings(
-        model_name=model_name
-        )
-    return embeddings
+def get_embeddings():
+    """Return Pinecone's hosted embedding model (API-based, no local model
+    download). Uses the Pinecone account's own inference API (5M free
+    tokens/month) rather than Gemini's much smaller free embedding quota
+    (1000 requests/day), which is too small to re-embed this project's PDF
+    in a reasonable time."""
+    return PineconeEmbeddings(
+        model="multilingual-e5-large",
+        pinecone_api_key=os.environ.get("PINECONE_API_KEY"),
+    )
